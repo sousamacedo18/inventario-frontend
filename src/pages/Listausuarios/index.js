@@ -18,8 +18,13 @@ export default function Listausuarios(){
     }
     function mostrarlista(){
         
-        let cadastros=JSON.parse(localStorage.getItem("cd-usuarios")||"[]");
-        setDados(cadastros);
+        // let cadastros=JSON.parse(localStorage.getItem("cd-usuarios")||"[]");
+        // setDados(cadastros);
+
+        fetch('http://localhost:5000/usuario')
+            .then((response) => response.json())
+            .then((data) => setDados(data.usuario));
+            //.then((data) => console.log(data));
   
 
     }
