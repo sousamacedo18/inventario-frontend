@@ -81,6 +81,7 @@ export default function Logon(){
             <section className="div-imagem">
                     <img src={logo} alt="logo" width={150} />
                     <h1>Sistema de Inventário</h1>
+                    <h1>Aqui está o melhor professor do SENAI, humilde também</h1>
             </section>
    
 

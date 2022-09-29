@@ -4,6 +4,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css'
 import Menu from "../../componentes/Menu";
 import Head from "../../componentes/Head";
 import Usuarios from "../../server/usuario.json";
+import api from "../../server/api";
 import { FiEdit,FiTrash,FiDelete, FiFilePlus } from "react-icons/fi";
 
 
@@ -21,12 +22,25 @@ export default function Listausuarios(){
         // let cadastros=JSON.parse(localStorage.getItem("cd-usuarios")||"[]");
         // setDados(cadastros);
 
-        fetch('http://localhost:5000/usuario')
-            .then((response) => response.json())
-            .then((data) => setDados(data.usuario));
+        // fetch('http://10.1.2.168:5000/usuario')
+        //     .then((response) => response.json())
+        //     .then((data) => setDados(data.usuario));
             //.then((data) => console.log(data));
-  
+        
+        api.get('/usuario')
+          .then(res => {
+            if(res.status==200){
+                setDados(res.data.usuario);
+                console.log("Status"+res.status);
+                console.log(res.data.mensagem);
+            }else{
+                console.log("houve um erro na requisição")
+            }
 
+          })  
+          .catch(function (error) {
+            console.log(error);
+          });
     }
     function excluir(i,nome){
         confirmAlert({
