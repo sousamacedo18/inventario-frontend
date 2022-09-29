@@ -1,6 +1,7 @@
 import React,{useState} from "react";
 import Menu from "../../componentes/Menu";
 import Head from "../../componentes/Head";
+import api from "../../server/api";
 
 
 
@@ -11,7 +12,11 @@ export default function Cadastrousuario(){
     const [confsenha,setConfSenha] = useState('');
     const [msg,setMsg]=useState('');
     const [valida,setValida] = useState(false);
-
+    const dados={
+       nome:nome,
+       email:email,
+       senha:senha
+    }
     function validarSenha(){
        
         if(senha!=="")
@@ -51,19 +56,34 @@ export default function Cadastrousuario(){
                                 }
             if(index===0){
                
-                let listaUser = JSON.parse(localStorage.getItem("cd-usuarios")||"[]")
+                api.post('/usuario',{nome:"teste",email:"fasdf@com",senha:"321"})
+                  .then(function (response) {
+                    console.log(response);
+                  })
+                  .catch(function (error) {
+                    console.log(error);
+                  });
+                // try{
+                //     const response = await api.post('/usuario',dados);
+                //     alert(`Seu ID de acesso: ${response.data.usuario}`);
+                //         window.location.href="/listausuario";
+                //     } catch(err){
+                       
+                //         alert('Erro no cadastro, tente novamente.');
+                //     }
+                // let listaUser = JSON.parse(localStorage.getItem("cd-usuarios")||"[]")
             
-                listaUser.push(
-                    {
-                        id:Date.now().toString(36)+Math.floor(Math.pow(10,12)+Math.random()*9*Math.pow(10,12)).toString(36),
-                        nome:nome,
-                        email:email,
-                        senha:senha
-                    }
-                )
-                localStorage.setItem("cd-usuarios",JSON.stringify(listaUser));
-                alert("Cadastro Salvo com Sucesso!!!!");
-                window.location.href="/listausuario";
+                // listaUser.push(
+                //     {
+                //         id:Date.now().toString(36)+Math.floor(Math.pow(10,12)+Math.random()*9*Math.pow(10,12)).toString(36),
+                //         nome:nome,
+                //         email:email,
+                //         senha:senha
+                //     }
+                // )
+                // localStorage.setItem("cd-usuarios",JSON.stringify(listaUser));
+                // alert("Cadastro Salvo com Sucesso!!!!");
+                
             }  
     }
 }

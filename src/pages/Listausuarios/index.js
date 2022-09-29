@@ -50,10 +50,16 @@ export default function Listausuarios(){
               {
                 label: 'Sim',
                 onClick: () => {
-                    let dadosnovos = [];
-                    dadosnovos=dados.filter(item =>item.id!==i);
-                    setDados(dadosnovos);
-                    localStorage.setItem('cd-usuarios',JSON.stringify(dadosnovos));
+                    // let dadosnovos = [];
+                    // dadosnovos=dados.filter(item =>item.id!==i);
+                    // setDados(dadosnovos);
+                    // localStorage.setItem('cd-usuarios',JSON.stringify(dadosnovos));
+                    api.delete(`/usuario/${i}`)
+                    .then(res => {});
+                    mostrarlista();
+                    alert("Dados Deletados com Sucesso!");
+
+
                 }
               },
               {
