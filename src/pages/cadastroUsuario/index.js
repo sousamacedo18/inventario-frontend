@@ -2,10 +2,11 @@ import React,{useState} from "react";
 import Menu from "../../componentes/Menu";
 import Head from "../../componentes/Head";
 import api from "../../server/api";
-
+import { useHistory } from 'react-router-dom';
 
 
 export default function Cadastrousuario(){
+    const navigate = useHistory();
     const [nome,setNome] = useState('');
     const [email,setEmail] = useState('');
     const [senha,setSenha] = useState('');
@@ -13,10 +14,16 @@ export default function Cadastrousuario(){
     const [msg,setMsg]=useState('');
     const [valida,setValida] = useState(false);
     const dados={
-       nome:nome,
-       email:email,
-       senha:senha
+       nome,
+       email,
+       senha
     }
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        //body: JSON.stringify({ title: 'Fetch POST Request Example' })
+        body: JSON.stringify(dados)
+    };
     function validarSenha(){
        
         if(senha!=="")
@@ -40,9 +47,11 @@ export default function Cadastrousuario(){
     function salvardados(e){
         e.preventDefault();
         validarSenha();
+  
         if(valida===false){
             setMsg("Senhas não Conferem!!!");
         }else{
+           
 
                                 let index=0;
                             
@@ -55,32 +64,19 @@ export default function Cadastrousuario(){
                                     index++;
                                 }
             if(index===0){
-               
-                api.post('/usuario',{nome:"teste",email:"fasdf@com",senha:"321"})
-                  .then(function (response) {
-                    console.log(response);
-                  })
-                  .catch(function (error) {
-                    console.log(error);
+            api.post("usuario",
+                   dados,
+
+                   {headers: { 'Content-Type': 'application/json' }
+                   
+                }).then(function (response) {
+                    console.log(response.data);
+                
+                    alert("Cadastro Salvo com Sucesso!!!!");
+                    window.location.href="/listausuario";
                   });
-                // try{
-                //     const response = await api.post('/usuario',dados);
-                //     alert(`Seu ID de acesso: ${response.data.usuario}`);
-                //         window.location.href="/listausuario";
-                //     } catch(err){
-                       
-                //         alert('Erro no cadastro, tente novamente.');
-                //     }
-                // let listaUser = JSON.parse(localStorage.getItem("cd-usuarios")||"[]")
-            
-                // listaUser.push(
-                //     {
-                //         id:Date.now().toString(36)+Math.floor(Math.pow(10,12)+Math.random()*9*Math.pow(10,12)).toString(36),
-                //         nome:nome,
-                //         email:email,
-                //         senha:senha
-                //     }
-                // )
+
+
                 // localStorage.setItem("cd-usuarios",JSON.stringify(listaUser));
                 // alert("Cadastro Salvo com Sucesso!!!!");
                 

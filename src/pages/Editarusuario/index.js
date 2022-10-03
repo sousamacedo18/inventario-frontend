@@ -16,7 +16,16 @@ export default function Editarusuario(){
     const [msg,setMsg]=useState('');
     const [valida,setValida] = useState(false);
     const [usu,setUsu] = useState(false);
-    
+    const dados={
+        id:idusuario,
+        nome,
+        email,
+        senha
+
+    }
+    const headers = {
+        'Content-Type': 'application/json'
+    };
     useEffect(()=>{
        mostrarDados();
     },[])
@@ -74,7 +83,7 @@ export default function Editarusuario(){
                    }, 4000);
         }
     }
-    function salvardados(e){
+ async   function salvardados(e){
         e.preventDefault();
         validarSenha();
         if(valida===false){
@@ -92,19 +101,34 @@ export default function Editarusuario(){
                                     index++;
                                 }
             if(index===0){
-                let listaUser = JSON.parse(localStorage.getItem("cd-usuarios"));
-                listaUser.map((item)=>{
-                    if(item.id==idusuario){
-                        item.nome=nome;
-                        item.email=email;
-                        item.senha=senha;
-                    }
+                api.patch("usuario",
+                dados,
+
+                {headers: { 'Content-Type': 'application/json' }
+                
+             }).then(function (response) {
+                 console.log(response.data);
+             
+                 alert("Cadastro Salvo com Sucesso!!!!");
+                 window.location.href="/listausuario";
+               });
+            
+                // let listaUser = JSON.parse(localStorage.getItem("cd-usuarios"));
+                // listaUser.map((item)=>{
+                //     if(item.id==idusuario){
+                //         item.nome=nome;
+                //         item.email=email;
+                //         item.senha=senha;
+                //     }
                    
 
-                })
-                localStorage.setItem("cd-usuarios",JSON.stringify(listaUser))
-                alert("Dados Salvos com sucesso!")
-                window.location.href="/listausuario";
+                // })
+            
+
+               
+                // localStorage.setItem("cd-usuarios",JSON.stringify(listaUser))
+                // alert("Dados Salvos com sucesso!")
+                // window.location.href="/listausuario";
             }
     }
 }
