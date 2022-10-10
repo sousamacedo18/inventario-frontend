@@ -113,22 +113,6 @@ export default function Editarusuario(){
                  window.location.href="/listausuario";
                });
             
-                // let listaUser = JSON.parse(localStorage.getItem("cd-usuarios"));
-                // listaUser.map((item)=>{
-                //     if(item.id==idusuario){
-                //         item.nome=nome;
-                //         item.email=email;
-                //         item.senha=senha;
-                //     }
-                   
-
-                // })
-            
-
-               
-                // localStorage.setItem("cd-usuarios",JSON.stringify(listaUser))
-                // alert("Dados Salvos com sucesso!")
-                // window.location.href="/listausuario";
             }
     }
 }

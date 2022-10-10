@@ -4,6 +4,7 @@ import './styles.css';
 import logo from '../../assets/images/logo2.png';
 import { useHistory } from 'react-router-dom';
 import Usuario from '../../server/usuario.json';
+import api from "../../server/api";
 
 export default function Logon(){
     const history =useHistory();
@@ -23,31 +24,52 @@ export default function Logon(){
     ]
 
  function logar(e){
+    e.preventDefault();
+  
     
         let usu;
         if(email==="" || senha===""){
             alert("Campos vazios, verifique!");
         }else{
-             usu=Usuario.filter(function(value){
-                return value.email==email && value.senha==senha
-            })
+            //  usu=Usuario.filter(function(value){
+            //     return value.email==email && value.senha==senha
+            // })
        
-                if(usu.length>0){
+                // if(usu.length>0){
                
-                    setNome(usu[0].nomeusuario);
-                    setId(usu[0].id);
+                //     setNome(usu[0].nomeusuario);
+                //     setId(usu[0].id);
                   
-                    localStorage.setItem("usuario",JSON.stringify(dados))
-                    const value=localStorage.getItem("usuario");
-                    const json=JSON.parse(value);
-                    console.log(value);
+                    // localStorage.setItem("usuario",JSON.stringify(dados))
+                    // const value=localStorage.getItem("usuario");
+                    // const json=JSON.parse(value);
+                    // console.log(value);
+                   
+                    api.post(`/usuario/logar`,{email:email,senha:senha})
+                    .then(res => {
+                      if(res.status==200){
+                        let resultado=res.data.usuario;
+                            if(resultado.length>0){
+                                window.location.href="/dashboard"
+                            }else{
+                                alert("Digite Email ou Senha validos")
+                            }
+                
+                      }else{
+                          console.log("houve um erro na requisição")
+                      }
+          
+                    })  
+                    .catch(function (error) {
+                      console.log(error);
+                    });
                  
-                   history.push('/dashboard');
+                   
     
 
-            }else{
-                alert("Dados não encontrados!")
-            }
+            // }else{
+            //     alert("Dados não encontrados!")
+            // }
        
 
         }
