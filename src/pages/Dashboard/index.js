@@ -13,6 +13,7 @@ export default function Dashboard(){
                   
                 <div className="principal">
                         <p>Principal</p>
+                       
                 </div>
                         
             </div>

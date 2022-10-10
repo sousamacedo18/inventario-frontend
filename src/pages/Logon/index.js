@@ -50,8 +50,22 @@ export default function Logon(){
                       if(res.status==200){
                         let resultado=res.data.usuario;
                             if(resultado.length>0){
+                                //criei uma variavel do tipo JSON para
+                                //armazenar dados na sessionStorege
+                               
+                                let session=
+                                {
+                                    nome:resultado[0].nome,
+                                    email:resultado[0].email,
+                                    id:resultado[0].id
+                                }
+                               
+                                //aqui setamos a chave na sessionStorage
+                                sessionStorage.setItem("session",JSON.stringify(session))
+
                                 window.location.href="/dashboard"
                             }else{
+                                sessionStorage.clear();
                                 alert("Digite Email ou Senha validos")
                             }
                 
